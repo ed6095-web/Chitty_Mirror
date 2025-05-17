@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChittyMirror - Gesture Control</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fingerpose@0.1.0/dist/fingerpose.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="loadingOverlay">
+        <div class="loader"></div>
+        <p>Initializing ChittyMirror AI...</p>
+    </div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <h1>ChittyMirror</h1>
+            <nav class="tabs">
+                <button class="tab-link active" data-tab="mirrorTab">Gesture Mirror</button>
+                <button class="tab-link" data-tab="rpsTab">Rock-Paper-Scissors</button>
+            </nav>
+        </header>
+
+        <main id="mirrorTab" class="tab-content active">
+            <div class="main-content-grid">
+                <div class="video-column">
+                    <h2>Live Feed</h2>
+                    <div class="video-container">
+                        <video id="webcamFeed" autoplay playsinline></video>
+                    </div>
+                </div>
+                <div class="canvas-column">
+                    <h2>Gesture Mirror</h2>
+                    <div class="canvas-container">
+                        <canvas id="gestureCanvas"></canvas>
+                        <canvas id="particleCanvas"></canvas>
+                    </div>
+                    <div class="gesture-label-container">
+                        <p id="gestureLabel">Initializing...</p>
+                    </div>
+                </div>
+            </div>
+            <section class="info-panels">
+                <div class="gesture-history-container">
+                    <div class="history-header">
+                        <h3>Gesture History</h3>
+                        <button id="clearHistoryButton" class="clear-history-btn" title="Clear History">&times;</button>
+                    </div>
+                    <ul id="gestureHistoryList"></ul>
+                </div>
+                <div class="gesture-counter-container">
+                    <h3>Gesture Counts</h3>
+                    <ul id="gestureCounterList"></ul>
+                </div>
+            </section>
+            <footer class="controls mirror-controls">
+                <button id="speakButton" class="control-btn">Speak Gesture</button>
+                <button id="captureImageButton" class="control-btn">Capture Image</button>
+                <button id="clearLabelButton" class="control-btn">Clear Label</button>
+                <button id="helpButton" class="control-btn">Help / Info</button>
+            </footer>
+        </main>
+
+        <main id="rpsTab" class="tab-content rps-game-container">
+            <h2>Rock - Paper - Scissors</h2>
+            <div class="rps-match-area">
+                <div class="rps-player-area">
+                    <h3>Your Move</h3>
+                    <div id="playerMoveIcon" class="rps-icon">❓</div>
+                    <p id="playerGestureRPS">Show your gesture!</p>
+                </div>
+                <div class="rps-vs">VS</div>
+                <div class="rps-ai-area">
+                    <h3>AI's Move</h3>
+                    <div id="aiMoveIcon" class="rps-icon">❓</div>
+                </div>
+            </div>
+            <div id="rpsResult" class="rps-result-text">Make a move to start!</div>
+            <div class="rps-instructions">
+                <p>Use your hand: ✊ (Rock), ✋ (Paper), or ✌️ (Scissors)</p>
+                <p>Hold your gesture for a moment to lock it in.</p>
+            </div>
+             <div class="rps-video-feed">
+                <p>Align hand with Gesture Mirror below for detection</p>
+                <div class="video-container rps-video-container">
+                    <video id="webcamFeedRPS" autoplay playsinline></video>
+                </div>
+                <div class="canvas-container rps-canvas-container">
+                     <canvas id="gestureCanvasRPS"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeHelpModal">&times;</span>
+            <h2>How to Use ChittyMirror (Info)</h2>
+            <p><strong>Gesture Mirror Tab:</strong></p>
+            <ul>
+                <li>Allow webcam access. Your hand's skeleton will be mirrored.</li>
+                <li>Recognized gestures will be displayed and can be spoken.</li>
+                <li>Use buttons to Speak, Capture, Clear, or see this Help.</li>
+            </ul>
+            <p><strong>Rock-Paper-Scissors Tab:</strong></p>
+            <ul>
+                <li>The webcam feed at the bottom helps align your hand for this game.</li>
+                <li>Show Rock (✊), Paper (✋), or Scissors (✌️) with your hand.</li>
+                <li>Hold the gesture briefly to play against the AI.</li>
+                <li>Results will be displayed.</li>
+            </ul>
+            <p><strong>Tip:</strong> Ensure good lighting for best hand detection on both tabs.</p>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
